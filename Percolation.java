@@ -3,10 +3,11 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 
     final private int n;
-    final private int numOfsites;
+    final private int numOfSites;
     final private WeightedQuickUnionUF uf;
+    final private WeightedQuickUnionUF uf_up;
     private boolean[][] grid;
-    private int numOfopensites;
+    private int numOfOpenSites;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
@@ -17,11 +18,12 @@ public class Percolation {
             // if either n ≤ 0 or trials ≤ 0
         }
         this.n = n;
-        numOfsites = n * n;
-        uf = new WeightedQuickUnionUF(numOfsites + 2);  //+ virtual top and bottom sites
+        numOfSites = n * n;
+        uf = new WeightedQuickUnionUF(numOfSites + 2);  //+ virtual top and bottom sites
+        uf_up = new WeightedQuickUnionUF(numOfSites + 1);
 
         grid = new boolean[n + 1][n + 1]; //indexes in [1,n]
-        numOfopensites = 0;
+        numOfOpenSites = 0;
     }
 
 
@@ -38,23 +40,28 @@ public class Percolation {
             grid[row][col] = true;
             if (row != 1 && grid[row - 1][col]) {
                 uf.union(indexOfid, indexOfid - n);
+                uf_up.union(indexOfid, indexOfid - n);
             }
             else if (row == 1) {
                 uf.union(0, indexOfid);
+                uf_up.union(0, indexOfid);
             }
             if (row != n && grid[row + 1][col]) {
                 uf.union(indexOfid, indexOfid + n);
+                uf_up.union(indexOfid, indexOfid + n);
             }
             else if (row == n) {
-                uf.union(numOfsites + 1, indexOfid);
+                uf.union(numOfSites + 1, indexOfid);
             }
             if (col != 1 && grid[row][col - 1]) {
                 uf.union(indexOfid, indexOfid - 1);
+                uf_up.union(indexOfid, indexOfid - 1);
             }
             if (col != n && grid[row][col + 1]) {
                 uf.union(indexOfid, indexOfid + 1);
+                uf_up.union(indexOfid, indexOfid + 1);
             }
-            numOfopensites += 1;
+            numOfOpenSites += 1;
         }
     }
 
@@ -72,18 +79,19 @@ public class Percolation {
         if (col <= 0 || col > n)
             throw new java.lang.IllegalArgumentException("column index is out of bounds");
         int indexOfid = (row - 1) * n + col;
-        if (uf.connected(0, indexOfid)) {//is connected to virtual top?
+        if (uf.connected(0, indexOfid) && uf_up
+                .connected(0, indexOfid)) {//is connected to virtual top besides bottom virtual site
             return true;
         }
         return false;
     }
 
     public int numberOfOpenSites() {
-        return numOfopensites;
+        return numOfOpenSites;
     }
 
     public boolean percolates() {
-        if (uf.connected(0, numOfsites + 1)) {
+        if (uf.connected(0, numOfSites + 1)) {
             return true; //if virtual top connected with virtual bottom
         }
         return false;
@@ -93,4 +101,3 @@ public class Percolation {
     public static void main(String[] args) {
     }
 }
-
