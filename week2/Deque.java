@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
 
@@ -121,16 +122,10 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    public static void printIterable(Deque<String> deque) {
-        for (String str : deque) System.out.print(str + " ");
-        System.out.println();
-
-    }
-
     // unit testing (required)
     public static void main(String[] args) {
+        
         Deque<String> deque = new Deque<String>();
-        Iterator<String> i = deque.iterator();
         deque.addFirst("to");
         deque.addFirst("be");
         deque.addLast("that");
@@ -150,11 +145,16 @@ public class Deque<Item> implements Iterable<Item> {
         deque.removeFirst();
         deque.addLast("or");
         deque.addFirst("not");
-        for (String s : deque) {
+        Iterator<String> i = deque.iterator();
+        while (i.hasNext()) {
+            String s = i.next();
             StdOut.println(s);
         }
+        for (int j = 0; j < 10; j++) {
+            StdOut.println(StdRandom.uniform(2, 5));
 
+        }
 
+         
     }
-
 }
