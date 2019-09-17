@@ -1,3 +1,11 @@
+/* *****************************************************************************
+ * Intersection of two sets.
+ * Given two arrays a[] and b[],
+ * each containing n distinct 2D points in the plane,
+ * design a subquadratic algorithm to count the number of points
+ * that are contained both in array a[] and array b[].
+ * Hint: shellsort (or any other subquadratic sort).
+ **************************************************************************** */
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Shell;
 import edu.princeton.cs.algs4.StdOut;
