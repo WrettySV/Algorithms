@@ -5,6 +5,8 @@
  * design a subquadratic algorithm to count the number of points
  * that are contained both in array a[] and array b[].
  * Hint: shellsort (or any other subquadratic sort).
+ * Shellsort - https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Shell.java.html
+ * Point2D class - https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Point2D.java.html
  **************************************************************************** */
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Shell;
